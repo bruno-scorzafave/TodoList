@@ -2,9 +2,10 @@
 <resources>
     <string name="add_task_title">Criar Tarefa</string>
     <string name="task_title">Titulo</string>
-    <string name="new_task">Nova Tarefa</string>
+    <string name="task_new">Nova Tarefa</string>
     <string name="task_description">Descrição</string>
     <string name="task_date">Data</string>
     <string name="task_hour">Horário</string>
     <string name="cancel">Cancelar</string>
+    <string name="app_title">Tarefas</string>
 </resources>
