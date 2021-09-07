@@ -1,7 +1,8 @@
 package com.scorza5.todolist.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -11,6 +12,8 @@ import com.scorza5.todolist.databinding.ActivityAddTaskBinding
 import com.scorza5.todolist.datasource.TaskDataSource
 import com.scorza5.todolist.extensions.format
 import com.scorza5.todolist.model.Task
+import com.scorza5.todolist.ui.MainActivity.Companion.CREATE_NEW_TASK
+import com.scorza5.todolist.ui.MainActivity.Companion.REQUEST_CODE
 import java.util.*
 
 class AddTaskActivity: AppCompatActivity() {
@@ -21,6 +24,16 @@ class AddTaskActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if(intent.hasExtra(TASK_ID)){
+            val taskId = intent.getIntExtra(TASK_ID, 0)
+            TaskDataSource.findByID(taskId)?.let {
+                binding.tilTitle.editText?.setText(it.title)
+                binding.tilDescription.editText?.setText(it.description)
+                binding.tilDate.editText?.setText(it.date)
+                binding.tilHour.editText?.setText(it.hour)
+            }
+        }
 
         insertListeners()
     }
@@ -63,11 +76,20 @@ class AddTaskActivity: AppCompatActivity() {
                 description = binding.tilDescription.editText?.text.toString(),
                 date = binding.tilDate.editText?.text.toString(),
                 hour = binding.tilHour.editText?.text.toString(),
-
+                id = intent.getIntExtra(TASK_ID, 0)
             )
+            intent = Intent(this, MainActivity::class.java)
+            intent.putExtra(REQUEST_CODE, CREATE_NEW_TASK)
             TaskDataSource.insertTask(task)
-            Log.v("TAG", "insertListeners: "+ TaskDataSource.getList())
+            Log.e("Task:", TaskDataSource.getList().toString())
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
         }
+    }
+
+    companion object{
+        const val TASK_ID = "task_id"
     }
 
 }

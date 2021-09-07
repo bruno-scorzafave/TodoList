@@ -7,6 +7,10 @@
     <string name="task_description">Descrição</string>
     <string name="task_date">Data</string>
     <string name="task_hour">Horário</string>
-    <string name="task_create">Criar Tarefa</string>
+    <string name="task_create">Salvar Tarefa</string>
     <string name="cancel">Cancelar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Deletar</string>
+    <string name="no_task">Ops! Você não possui nenhuma tarefa</string>
+    <string name="create_task">Criar Tarefa</string>
 </resources>
