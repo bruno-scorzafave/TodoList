@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="@string/task_create"
+        app:title="@string/create_task"
         app:navigationIcon="@drawable/ic_navigate_before"
         app:layout_constraintTop_toTopOf="parent"/>
 
