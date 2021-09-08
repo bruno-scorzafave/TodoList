@@ -9,15 +9,16 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.scorza5.todolist.databinding.ActivityAddTaskBinding
-import com.scorza5.todolist.datasource.TaskDataSource
 import com.scorza5.todolist.extensions.format
 import com.scorza5.todolist.model.Task
 import com.scorza5.todolist.ui.MainActivity.Companion.CREATE_NEW_TASK
 import com.scorza5.todolist.ui.MainActivity.Companion.REQUEST_CODE
+import com.scorza5.todolist.viewmodel.TaskViewModel
 import java.util.*
 
 class AddTaskActivity: AppCompatActivity() {
 
+    private lateinit var mTaskViewModel: TaskViewModel
     private lateinit var binding: ActivityAddTaskBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,12 +28,11 @@ class AddTaskActivity: AppCompatActivity() {
 
         if(intent.hasExtra(TASK_ID)){
             val taskId = intent.getIntExtra(TASK_ID, 0)
-            TaskDataSource.findByID(taskId)?.let {
-                binding.tilTitle.editText?.setText(it.title)
-                binding.tilDescription.editText?.setText(it.description)
-                binding.tilDate.editText?.setText(it.date)
-                binding.tilHour.editText?.setText(it.hour)
-            }
+            var task = mTaskViewModel.findById(taskId) as Task
+            binding.tilTitle.editText?.setText(task.title)
+            binding.tilDescription.editText?.setText(task.description)
+            binding.tilDate.editText?.setText(task.date)
+            binding.tilHour.editText?.setText(task.hour)
         }
 
         insertListeners()
@@ -80,9 +80,9 @@ class AddTaskActivity: AppCompatActivity() {
             )
             intent = Intent(this, MainActivity::class.java)
             intent.putExtra(REQUEST_CODE, CREATE_NEW_TASK)
-            TaskDataSource.insertTask(task)
-            Log.e("Task:", TaskDataSource.getList().toString())
-            setResult(Activity.RESULT_OK, intent)
+            mTaskViewModel.addTask(task)
+            //TaskDataSource.insertTask(task)
+            //setResult(Activity.RESULT_OK, intent)
 
             finish()
         }

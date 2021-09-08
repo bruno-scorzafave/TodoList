@@ -12,6 +12,7 @@ import com.scorza5.todolist.model.Task
 
 class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback()) {
 
+    private var taskList = emptyList<Task>()
     var listenerEdit: (Task) -> Unit = {}
     var listenerDelete: (Task) -> Unit = {}
 
@@ -24,6 +25,12 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    fun setData(task: List<Task>) {
+        this.taskList = task
+        notifyDataSetChanged()
+    }
+
     inner class TaskViewHolder(private val binding: ItemTaskBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(item: Task){
             binding.tvTitle.text = item.title
