@@ -15,8 +15,8 @@ import com.google.android.material.timepicker.TimeFormat
 import com.scorza5.todolist.databinding.ActivityAddTaskBinding
 import com.scorza5.todolist.extensions.format
 import com.scorza5.todolist.model.Task
-import com.scorza5.todolist.ui.MainActivity.Companion.CREATE_NEW_TASK
-import com.scorza5.todolist.ui.MainActivity.Companion.REQUEST_CODE
+//import com.scorza5.todolist.ui.MainActivity.Companion.CREATE_NEW_TASK
+//import com.scorza5.todolist.ui.MainActivity.Companion.REQUEST_CODE
 import com.scorza5.todolist.viewmodel.TaskViewModel
 import java.util.*
 
@@ -30,7 +30,7 @@ class AddTaskActivity: AppCompatActivity() {
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+        /*mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
         if(intent.hasExtra(TASK_ID)){
             val taskId = intent.getIntExtra(TASK_ID, 0)
@@ -41,9 +41,9 @@ class AddTaskActivity: AppCompatActivity() {
             binding.tilHour.editText?.setText(task.hour)
         }
 
-        insertListeners()
+        insertListeners()*/
     }
-
+    /*
     private fun insertListeners(){
         binding.tilDate.editText?.setOnClickListener {
             val datePicker =
@@ -80,7 +80,7 @@ class AddTaskActivity: AppCompatActivity() {
             insertDataToDatabase()
 
             intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(REQUEST_CODE, CREATE_NEW_TASK)
+            //intent.putExtra(REQUEST_CODE, CREATE_NEW_TASK)
             //TaskDataSource.insertTask(task)
             setResult(Activity.RESULT_OK, intent)
 
@@ -111,5 +111,5 @@ class AddTaskActivity: AppCompatActivity() {
     companion object{
         const val TASK_ID = "task_id"
     }
-
+    */
 }

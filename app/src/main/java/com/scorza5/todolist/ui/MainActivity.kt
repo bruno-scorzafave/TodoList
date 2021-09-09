@@ -3,6 +3,7 @@ package com.scorza5.todolist.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,20 +16,25 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scorza5.todolist.R
 import com.scorza5.todolist.databinding.ActivityMainBinding
 import com.scorza5.todolist.model.Task
 import com.scorza5.todolist.ui.AddTaskActivity
-import com.scorza5.todolist.ui.AddTaskActivity.Companion.TASK_ID
+//import com.scorza5.todolist.ui.AddTaskActivity.Companion.TASK_ID
 import com.scorza5.todolist.viewmodel.TaskViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mTaskViewModel: TaskViewModel
     private lateinit var binding: ActivityMainBinding
+
+    /*private lateinit var mTaskViewModel: TaskViewModel
     private val adapter by lazy { TaskListAdapter() }
 
 
@@ -44,17 +50,21 @@ class MainActivity : AppCompatActivity() {
             //binding.rvTasks.adapter = adapter
             updateList()
         }
-    }
+    } */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setupActionBarWithNavController(findNavController(R.id.fragmentList))
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        val navController = navHostFragment.findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
         //binding.rvTasks.adapter = adapter
         // o problema ta no owner vou ter que criar fragments?
-        mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+        //mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
         setContentView(binding.root)
 
@@ -63,7 +73,13 @@ class MainActivity : AppCompatActivity() {
         //insertListeners()
     }
 
-    private fun insertListeners(){
+    override fun onSupportNavigateUp(): Boolean {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        val navController = navHostFragment.findNavController()
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    /* private fun insertListeners(){
         binding.fabAdd.setOnClickListener {
             val intent = Intent(this, AddTaskActivity::class.java)
             resultContract.launch(intent)
@@ -97,5 +113,5 @@ class MainActivity : AppCompatActivity() {
     companion object{
         const val CREATE_NEW_TASK = 1000
         const val REQUEST_CODE = "REQUEST_CODE"
-    }
+    } */
 }

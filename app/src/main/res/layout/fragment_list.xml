@@ -9,7 +9,6 @@
         android:id="@+id/rv_tasks"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,9 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/task_create"
         android:src="@drawable/ic_add"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:contentDescription="@string/task_create"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
