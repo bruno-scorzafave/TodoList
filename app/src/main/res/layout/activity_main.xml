@@ -31,17 +31,28 @@
         android:id="@+id/include_empty"
         layout="@layout/empty_state"/>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <!-- <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_tasks"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fab_add"
-        tools:listitem="@layout/item_task"
-        tools:itemCount="3"/>
+        app:layout_constraintBottom_toTopOf="@id/fab_add"/> -->
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentList"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/my_nav"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

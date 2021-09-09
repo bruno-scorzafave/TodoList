@@ -17,13 +17,19 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
     var listenerDelete: (Task) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val inflator = LayoutInflater.from(parent.context)
-        val binding = ItemTaskBinding.inflate(inflator, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemTaskBinding.inflate(inflater, parent, false)
         return TaskViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        //holder.bind(getItem(position))
+        val currentItem = taskList[position]
+        holder.binding.tvTitle.text = currentItem.title
+        holder.binding.tvHour.text = currentItem.hour
+        holder.binding.ivIcon.setOnClickListener{
+            holder.showPopup(currentItem)
+        }
     }
 
     fun setData(task: List<Task>) {
@@ -31,16 +37,9 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
         notifyDataSetChanged()
     }
 
-    inner class TaskViewHolder(private val binding: ItemTaskBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(item: Task){
-            binding.tvTitle.text = item.title
-            binding.tvHour.text = item.hour
-            binding.ivIcon.setOnClickListener {
-                showPopup(item)
-            }
-        }
+    inner class TaskViewHolder(val binding: ItemTaskBinding): RecyclerView.ViewHolder(binding.root){
 
-        private fun showPopup(item: Task){
+        fun showPopup(item: Task){
             val ivIcon = binding.ivIcon
             val popupMenu = PopupMenu(ivIcon.context, ivIcon)
             popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)

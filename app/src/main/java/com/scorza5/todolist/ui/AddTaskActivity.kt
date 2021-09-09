@@ -3,8 +3,12 @@ package com.scorza5.todolist.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -26,9 +30,11 @@ class AddTaskActivity: AppCompatActivity() {
         binding = ActivityAddTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+
         if(intent.hasExtra(TASK_ID)){
             val taskId = intent.getIntExtra(TASK_ID, 0)
-            var task = mTaskViewModel.findById(taskId) as Task
+            var task: Task = mTaskViewModel.findById(taskId)
             binding.tilTitle.editText?.setText(task.title)
             binding.tilDescription.editText?.setText(task.description)
             binding.tilDate.editText?.setText(task.date)
@@ -71,21 +77,35 @@ class AddTaskActivity: AppCompatActivity() {
             finish()
         }
         binding.btnNewTask.setOnClickListener {
-            val task = Task(
-                title = binding.tilTitle.editText?.text.toString(),
-                description = binding.tilDescription.editText?.text.toString(),
-                date = binding.tilDate.editText?.text.toString(),
-                hour = binding.tilHour.editText?.text.toString(),
-                id = intent.getIntExtra(TASK_ID, 0)
-            )
+            insertDataToDatabase()
+
             intent = Intent(this, MainActivity::class.java)
             intent.putExtra(REQUEST_CODE, CREATE_NEW_TASK)
-            mTaskViewModel.addTask(task)
             //TaskDataSource.insertTask(task)
-            //setResult(Activity.RESULT_OK, intent)
+            setResult(Activity.RESULT_OK, intent)
 
             finish()
         }
+    }
+
+    private fun insertDataToDatabase() {
+        val title = binding.tilTitle.editText?.text.toString()
+        val description = binding.tilDescription.editText?.text.toString()
+        val date = binding.tilDate.editText?.text.toString()
+        val hour = binding.tilHour.editText?.text.toString()
+        val id = intent.getIntExtra(TASK_ID, 0)
+
+        if (inputCheck(title, description, date, hour)){
+            val task = Task(id, title, description, date, hour)
+            mTaskViewModel.addTask(task)
+            Toast.makeText(this, "Successfully added!", Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(this, "Please fill out all fields.", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun inputCheck(title: String, description: String, date: String, hour: String): Boolean{
+        return !(TextUtils.isEmpty(title) && TextUtils.isEmpty(description) && TextUtils.isEmpty(date) && TextUtils.isEmpty(hour))
     }
 
     companion object{

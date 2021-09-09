@@ -1,9 +1,11 @@
 package com.scorza5.todolist.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.scorza5.todolist.datasource.TaskDao
 import com.scorza5.todolist.datasource.TaskDatabase
 import com.scorza5.todolist.model.Task
 import com.scorza5.todolist.repository.TaskRepository
@@ -16,9 +18,10 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
     private val taskRepository: TaskRepository
 
     init {
-        val taskDao = TaskDatabase.getDatabase(application).taskDao()
+        val taskDao:TaskDao = TaskDatabase.getDatabase(application).taskDao()
         taskRepository = TaskRepository(taskDao)
         readAllData = taskRepository.readAllData
+        Log.e("Data recebida:", readAllData.value.toString())
     }
 
     fun addTask(task: Task){
@@ -39,10 +42,7 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun findById(id: Int){
-        viewModelScope.launch(Dispatchers.IO){
-            taskRepository.findById(id)
-        }
+    fun findById(id: Int): Task{
+        return taskRepository.findById(id)
     }
-
 }

@@ -14,7 +14,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.scorza5.todolist.R
 import com.scorza5.todolist.databinding.ActivityMainBinding
 import com.scorza5.todolist.model.Task
 import com.scorza5.todolist.ui.AddTaskActivity
@@ -33,10 +37,10 @@ class MainActivity : AppCompatActivity() {
         val requestCode = result.data?.extras?.getInt(REQUEST_CODE)
         Log.e("Request Code:", requestCode.toString())
         if(requestCode == null){
-            Log.e("Result Contrat", "Não recebeu nada")
+            Log.e("Result Contract", "Não recebeu nada")
         }
         if(requestCode == CREATE_NEW_TASK){
-            Log.e("Result Contrat", "Dessa vez recebeu")
+            Log.e("Result Contract", "Dessa vez recebeu")
             //binding.rvTasks.adapter = adapter
             updateList()
         }
@@ -45,23 +49,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        binding.rvTasks.adapter = adapter
+        setupActionBarWithNavController(findNavController(R.id.fragmentList))
+
+        //binding.rvTasks.adapter = adapter
+        // o problema ta no owner vou ter que criar fragments?
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
 
-        updateList()
+        setContentView(binding.root)
 
+        //updateList()
 
-
-        insertListeners()
+        //insertListeners()
     }
 
     private fun insertListeners(){
         binding.fabAdd.setOnClickListener {
             val intent = Intent(this, AddTaskActivity::class.java)
-            //resultContract.launch(intent)
-            startActivity(intent)
+            resultContract.launch(intent)
         }
         adapter.listenerEdit = {
             val intent = Intent(this, AddTaskActivity::class.java)
@@ -76,12 +81,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateList(){
 
-        val list = mTaskViewModel.readAllData.toString()
-        Log.e("Data retornada", list)
-        binding.includeEmpty.emptyState.visibility = if(list.isNullOrEmpty() ) View.VISIBLE else View.GONE
+        val list = mTaskViewModel.readAllData.value
+        Log.e("Data retornada", list.toString())
+
         mTaskViewModel.readAllData.observe(this, Observer { task ->
             adapter.setData(task)
         })
+
+        val list2 = mTaskViewModel.readAllData.value
+        Log.e("Data retornada", list2.toString())
+
+        binding.includeEmpty.emptyState.visibility = if(list2 == null) View.VISIBLE else View.GONE
     }
 
     companion object{

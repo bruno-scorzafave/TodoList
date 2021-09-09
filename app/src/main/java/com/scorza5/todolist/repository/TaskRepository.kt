@@ -16,7 +16,5 @@ class TaskRepository(private val taskDao: TaskDao) {
     suspend fun deleteTask(task: Task){
         taskDao.deleteTask(task)
     }
-    suspend fun findById(id: Int){
-        taskDao.findById(id)
-    }
+    fun findById(id: Int): Task = taskDao.findById(id)
 }

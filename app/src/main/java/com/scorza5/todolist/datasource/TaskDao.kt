@@ -20,5 +20,5 @@ interface TaskDao {
     fun readAllData(): LiveData<List<Task>>
 
     @Query("SELECT * FROM task_table WHERE id = :id")
-    fun findById(id: Int): LiveData<Task>
+    fun findById(id: Int): Task
 }
