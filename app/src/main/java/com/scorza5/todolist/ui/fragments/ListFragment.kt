@@ -26,12 +26,12 @@ class ListFragment : Fragment() {
         binding = FragmentListBinding.inflate(layoutInflater)
 
         val recyclerView = binding.rvTasks
+        mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+        //mTaskViewModel.init()
         recyclerView.adapter = adapter
 
-        mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
-
         updateList()
-        emptyState(false)
+        emptyState(true)
 
         adapter.listenerEdit = {
             val bundle = Bundle(1)

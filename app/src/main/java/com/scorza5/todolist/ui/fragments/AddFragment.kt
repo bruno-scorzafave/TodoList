@@ -81,10 +81,10 @@ class AddFragment : Fragment() {
         val description = binding.tilDescription.editText?.text.toString()
         val date = binding.tilDate.editText?.text.toString()
         val hour = binding.tilHour.editText?.text.toString()
-        val id = (random() * 10).toInt()
+        val id = 0
 
         if (inputCheck(title, description, date, hour)){
-            val task = Task(id, title, description, date, hour)
+            val task = Task(id,title, description, date, hour)
             mTaskViewModel.addTask(task)
             Toast.makeText(context, "Successfully added!", Toast.LENGTH_LONG).show()
         } else {
