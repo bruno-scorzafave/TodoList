@@ -8,19 +8,34 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.scorza5.todolist.ui.fragments.ListFragment"
-        android:label="fragment_list"
+        android:label="@string/todo_list"
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_listFragment_to_updateFragment"
+            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
         android:name="com.scorza5.todolist.ui.fragments.AddFragment"
-        android:label="fragment_add"
+        android:label="@string/task_new"
         tools:layout="@layout/fragment_add" >
         <action
             android:id="@+id/action_addFragment_to_listFragment"
             app:destination="@id/listFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.scorza5.todolist.ui.fragments.UpdateFragment"
+        android:label="@string/update_task"
+        tools:layout="@layout/fragment_update" >
+        <action
+            android:id="@+id/action_updateFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+        <argument
+            android:name="currentTask"
+            app:argType="com.scorza5.todolist.model.Task" />
     </fragment>
 </navigation>

@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.scorza5.todolist.datasource.TaskDao
 import com.scorza5.todolist.datasource.TaskDatabase
@@ -21,7 +22,7 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
         val taskDao:TaskDao = TaskDatabase.getDatabase(application).taskDao()
         taskRepository = TaskRepository(taskDao)
         readAllData = taskRepository.readAllData
-        Log.e("Data recebida:", readAllData.value.toString())
+        Log.e("Task View Read Data:", readAllData.value.toString())
     }
 
     fun addTask(task: Task){

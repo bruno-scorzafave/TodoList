@@ -3,12 +3,15 @@ package com.scorza5.todolist.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.scorza5.todolist.R
 import com.scorza5.todolist.databinding.ItemTaskBinding
 import com.scorza5.todolist.model.Task
+import com.scorza5.todolist.repository.TaskRepository
 
 class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback()) {
 
@@ -24,7 +27,7 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         //holder.bind(getItem(position))
-        val currentItem = taskList[position]
+        val currentItem = currentList[position]
         holder.binding.tvTitle.text = currentItem.title
         holder.binding.tvHour.text = currentItem.hour
         holder.binding.ivIcon.setOnClickListener{
@@ -32,9 +35,8 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
         }
     }
 
-    fun setData(task: List<Task>) {
-        this.taskList = task
-        notifyDataSetChanged()
+    fun getList(): List<Task>{
+        return this.taskList
     }
 
     inner class TaskViewHolder(val binding: ItemTaskBinding): RecyclerView.ViewHolder(binding.root){

@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.UpdateFragment">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_start"
+        android:id="@+id/gl_start2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="24dp" />
+        app:layout_constraintGuide_begin="24dp"/>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_end"
+        android:id="@+id/gl_end2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="24dp" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_center"
+        android:id="@+id/gl_center2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_title"
+        android:id="@+id/til_update_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/gl_start2"
+        app:layout_constraintEnd_toEndOf="@id/gl_end2"
         android:hint="@string/task_title"
         android:layout_marginTop="16dp">
         <com.google.android.material.textfield.TextInputEditText
@@ -42,12 +44,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_description"
+        android:id="@+id/til_update_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/til_title"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintTop_toBottomOf="@id/til_update_title"
+        app:layout_constraintStart_toStartOf="@id/gl_start2"
+        app:layout_constraintEnd_toEndOf="@id/gl_end2"
         android:hint="@string/task_description"
         android:layout_marginTop="32dp">
         <com.google.android.material.textfield.TextInputEditText
@@ -60,12 +62,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_date"
+        android:id="@+id/til_update_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/til_description"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintEnd_toEndOf="@id/gl_center"
+        app:layout_constraintTop_toBottomOf="@id/til_update_description"
+        app:layout_constraintStart_toStartOf="@id/gl_start2"
+        app:layout_constraintEnd_toEndOf="@id/gl_center2"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         app:startIconDrawable="@drawable/ic_calendar"
@@ -77,12 +79,12 @@
 
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_hour"
+        android:id="@+id/til_update_hour"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/til_description"
-        app:layout_constraintStart_toStartOf="@id/gl_center"
-        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintTop_toBottomOf="@id/til_update_description"
+        app:layout_constraintStart_toStartOf="@id/gl_center2"
+        app:layout_constraintEnd_toEndOf="@id/gl_end2"
         android:layout_marginTop="40dp"
         android:layout_marginStart="8dp"
         app:startIconDrawable="@drawable/ic_watch"
@@ -94,26 +96,25 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_cancel"
+        android:id="@+id/btn_update_cancel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/btn_new_task"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintBottom_toTopOf="@id/btn_update_task"
+        app:layout_constraintStart_toStartOf="@id/gl_start2"
+        app:layout_constraintEnd_toEndOf="@id/gl_end2"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:text="@string/cancel"
         android:textAllCaps="false"
         android:layout_marginBottom="8dp"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_new_task"
+        android:id="@+id/btn_update_task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@id/gl_start"
-        app:layout_constraintEnd_toEndOf="@id/gl_end"
+        app:layout_constraintStart_toStartOf="@id/gl_start2"
+        app:layout_constraintEnd_toEndOf="@id/gl_end2"
         android:layout_marginBottom="16dp"
         android:text="@string/task_create"
         android:textAllCaps="false"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

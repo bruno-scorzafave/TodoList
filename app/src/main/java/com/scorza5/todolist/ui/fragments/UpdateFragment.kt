@@ -2,7 +2,6 @@ package com.scorza5.todolist.ui.fragments
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,24 +13,31 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.scorza5.todolist.R
-import com.scorza5.todolist.databinding.FragmentAddBinding
+import com.scorza5.todolist.databinding.FragmentUpdateBinding
 import com.scorza5.todolist.extensions.format
 import com.scorza5.todolist.model.Task
 import com.scorza5.todolist.viewmodel.TaskViewModel
-import java.lang.Math.random
 import java.util.*
 
-class AddFragment : Fragment() {
+class UpdateFragment : Fragment() {
 
-    private lateinit var binding: FragmentAddBinding
+    private lateinit var binding: FragmentUpdateBinding
+    private lateinit var task: Task
     private lateinit var mTaskViewModel: TaskViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddBinding.inflate(layoutInflater)
+        binding = FragmentUpdateBinding.inflate(layoutInflater)
+        task = requireArguments().getParcelable<Task>("task")!!
+
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
+
+        binding.tilUpdateTitle.editText!!.setText(task.title)
+        binding.tilUpdateDescription.editText!!.setText(task.description)
+        binding.tilUpdateDate.editText!!.setText(task.date)
+        binding.tilUpdateHour.editText!!.setText(task.hour)
 
         insertListeners()
 
@@ -39,7 +45,7 @@ class AddFragment : Fragment() {
     }
 
     private fun insertListeners(){
-        binding.tilDate.editText?.setOnClickListener {
+        binding.tilUpdateDate.editText?.setOnClickListener {
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setTitleText("Select date")
@@ -49,12 +55,12 @@ class AddFragment : Fragment() {
             datePicker.addOnPositiveButtonClickListener {
                 val timeZone = TimeZone.getDefault()
                 val offset = timeZone.getOffset(Date().time) * -1
-                binding.tilDate.editText?.setText(Date(it + offset).format())
+                binding.tilUpdateDate.editText?.setText(Date(it + offset).format())
 
             }
             datePicker.show(parentFragmentManager, "tag")
         }
-        binding.tilHour.editText?.setOnClickListener {
+        binding.tilUpdateHour.editText?.setOnClickListener {
             val timePicker = MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_24H)
                 .build()
@@ -62,38 +68,38 @@ class AddFragment : Fragment() {
             timePicker.addOnPositiveButtonClickListener(){
                 val minute = if(timePicker.minute in 0..9) "0${timePicker.minute}" else timePicker.minute
                 val hour = if(timePicker.hour in 0..9) "0${timePicker.hour}" else timePicker.hour
-                binding.tilHour.editText?.setText("${hour}:${minute}")
+                binding.tilUpdateHour.editText?.setText("${hour}:${minute}")
             }
 
             timePicker.show(parentFragmentManager, "tag")
         }
-        binding.btnCancel.setOnClickListener {
-            findNavController().navigate(R.id.action_addFragment_to_listFragment)
+        binding.btnUpdateCancel.setOnClickListener {
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
-        binding.btnNewTask.setOnClickListener {
+        binding.btnUpdateTask.setOnClickListener {
             insertDataToDatabase()
-            findNavController().navigate(R.id.action_addFragment_to_listFragment)
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
     }
 
     private fun insertDataToDatabase() {
-        val title = binding.tilTitle.editText?.text.toString()
-        val description = binding.tilDescription.editText?.text.toString()
-        val date = binding.tilDate.editText?.text.toString()
-        val hour = binding.tilHour.editText?.text.toString()
-        val id = (random() * 10).toInt()
+        val title = binding.tilUpdateTitle.editText?.text.toString()
+        val description = binding.tilUpdateDescription.editText?.text.toString()
+        val date = binding.tilUpdateDate.editText?.text.toString()
+        val hour = binding.tilUpdateHour.editText?.text.toString()
+        val id = task.id
 
         if (inputCheck(title, description, date, hour)){
             val task = Task(id, title, description, date, hour)
-            mTaskViewModel.addTask(task)
-            Toast.makeText(context, "Successfully added!", Toast.LENGTH_LONG).show()
+            mTaskViewModel.updateTask(task)
+            Toast.makeText(context, "Successfully updated!", Toast.LENGTH_LONG).show()
         } else {
             Toast.makeText(context, "Please fill out all fields.", Toast.LENGTH_LONG).show()
         }
     }
 
     private fun inputCheck(title: String, description: String, date: String, hour: String): Boolean{
-        Log.e("Data:", "2 $title$description$date$hour 2")
-        return !(title.isEmpty() && description.isEmpty() && date.isEmpty() && hour.isEmpty())
+        return !(TextUtils.isEmpty(title) && TextUtils.isEmpty(description) && TextUtils.isEmpty(date) && TextUtils.isEmpty(hour))
     }
+
 }

@@ -15,4 +15,6 @@
     <string name="create_task">Criar Tarefa</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="todo_list">Lista de Tarefas</string>
+    <string name="update_task">Editar Tarefa</string>
 </resources>
