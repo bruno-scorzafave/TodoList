@@ -10,6 +10,7 @@ import kotlinx.parcelize.Parcelize
 data class Task(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
+    var active: Int,
     val title: String,
     val description: String,
     val date: String,

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.scorza5.todolist.R
@@ -27,7 +28,6 @@ class ListFragment : Fragment() {
 
         val recyclerView = binding.rvTasks
         mTaskViewModel = ViewModelProvider(this).get(TaskViewModel::class.java)
-        //mTaskViewModel.init()
         recyclerView.adapter = adapter
 
         updateList()
@@ -41,6 +41,7 @@ class ListFragment : Fragment() {
         adapter.listenerDelete = {
             mTaskViewModel.deleteTask(it)
         }
+
 
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
@@ -60,6 +61,13 @@ class ListFragment : Fragment() {
             adapter.submitList(task)
         })
 
+    }
+
+    fun onChecked(view: View){
+        if (view is CheckBox) {
+            val checked: Boolean = view.isChecked
+
+        }
     }
 
     private fun emptyState(visibility: Boolean){
