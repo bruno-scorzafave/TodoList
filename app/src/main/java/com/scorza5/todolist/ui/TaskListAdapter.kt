@@ -1,6 +1,7 @@
 package com.scorza5.todolist.ui
 
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -38,22 +39,32 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
         holder.binding.ivIcon.setOnClickListener{
             holder.showPopup(currentItem)
         }
-        if (currentItem.active == 1){
-            holder.binding.checkBox.isChecked = false
-            holder.binding.tvTitle.paintFlags = holder.binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-            holder.binding.tvHour.paintFlags = holder.binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-            holder.binding.tvDesc.paintFlags = holder.binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-        } else if (currentItem.active == 0){
-            holder.binding.checkBox.isChecked = true
-            holder.binding.tvTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-            holder.binding.tvDesc.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-            holder.binding.tvHour.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+
+        holder.binding.checkBox.setOnClickListener {
+            currentItem.active = holder.binding.checkBox.isChecked
+            Log.v("active = ", "currentItem.active")
         }
+        listenerCheckBox(currentItem)
+
+        isActive(currentItem.active, holder)
 
     }
 
     fun getList(): List<Task>{
         return this.taskList
+    }
+    private fun isActive(active: Boolean, holder: TaskViewHolder){
+        if (active){
+            holder.binding.checkBox.isChecked = false
+            holder.binding.tvTitle.paintFlags = holder.binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            holder.binding.tvHour.paintFlags = holder.binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            holder.binding.tvDesc.paintFlags = holder.binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        } else{
+            holder.binding.checkBox.isChecked = true
+            holder.binding.tvTitle.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            holder.binding.tvDesc.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            holder.binding.tvHour.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        }
     }
 
     inner class TaskViewHolder(val binding: ItemTaskBinding): RecyclerView.ViewHolder(binding.root){
@@ -70,12 +81,6 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
                 return@setOnMenuItemClickListener true
             }
             popupMenu.show()
-        }
-        fun check(item: Task){
-            val checkBox = binding.checkBox
-            checkBox.setOnClickListener {
-                listenerCheckBox(item)
-            }
         }
     }
 }

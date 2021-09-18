@@ -84,7 +84,7 @@ class AddFragment : Fragment() {
         val id = 0
 
         if (inputCheck(title, description, date, hour)){
-            val task = Task(id, 1,title, description, date, hour)
+            val task = Task(id, true,title, description, date, hour)
             mTaskViewModel.addTask(task)
             Toast.makeText(context, "Successfully added!", Toast.LENGTH_LONG).show()
         } else {

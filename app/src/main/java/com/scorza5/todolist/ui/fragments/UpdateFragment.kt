@@ -90,7 +90,7 @@ class UpdateFragment : Fragment() {
         val id = task.id
 
         if (inputCheck(title, description, date, hour)){
-            val task = Task(id, 1, title, description, date, hour)
+            val task = Task(id, true, title, description, date, hour)
             mTaskViewModel.updateTask(task)
             Toast.makeText(context, "Successfully updated!", Toast.LENGTH_LONG).show()
         } else {

@@ -66,7 +66,20 @@ class ListFragment : Fragment() {
     fun onChecked(view: View){
         if (view is CheckBox) {
             val checked: Boolean = view.isChecked
-
+            binding.rvTasks.adapter
+            if (checked){
+                adapter.listenerCheckBox = {
+                    it.active = false
+                    mTaskViewModel.updateTask(it)
+                    adapter.notifyDataSetChanged()
+                }
+            } else {
+                adapter.listenerCheckBox = {
+                    it.active = true
+                    mTaskViewModel.updateTask(it)
+                    adapter.notifyDataSetChanged()
+                }
+            }
         }
     }
 
