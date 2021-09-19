@@ -37,7 +37,6 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         //holder.bind(getItem(position))
         val currentItem = currentList[position]
-        val checkBox = holder.binding.checkBox
         holder.binding.tvTitle.text = currentItem.title
         holder.binding.tvDesc.text = currentItem.description
         holder.binding.tvHour.text = "${currentItem.date} ${currentItem.hour}"
@@ -45,7 +44,7 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
             holder.showPopup(currentItem)
         }
         holder.binding.checkBox.setOnClickListener {
-            holder.check(currentItem, checkBox)
+            holder.check(currentItem)
         }
 
         isActive(currentItem.active, holder)
@@ -72,21 +71,27 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
     inner class TaskViewHolder(val binding: ItemTaskBinding): RecyclerView.ViewHolder(binding.root){
 
         fun showPopup(item: Task){
-            val ivIcon = binding.ivIcon
-            val popupMenu = PopupMenu(ivIcon.context, ivIcon)
-            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener {
-                when(it.itemId){
-                    R.id.action_edit -> {listenerEdit(item)}
-                    R.id.action_delete -> {listenerDelete(item)}
+            if (item.active) {
+                val ivIcon = binding.ivIcon
+                val popupMenu = PopupMenu(ivIcon.context, ivIcon)
+                popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+                popupMenu.setOnMenuItemClickListener {
+                    when (it.itemId) {
+                        R.id.action_edit -> {
+                            listenerEdit(item)
+                        }
+                        R.id.action_delete -> {
+                            listenerDelete(item)
+                        }
+                    }
+                    return@setOnMenuItemClickListener true
                 }
-                return@setOnMenuItemClickListener true
+                popupMenu.show()
             }
-            popupMenu.show()
         }
-        fun check(item: Task, checkBox: CheckBox){
-            item.active = checkBox.isChecked
+        fun check(item: Task){
             listenerUpdate(item)
+            notifyItemChanged(adapterPosition)
             }
         }
     }

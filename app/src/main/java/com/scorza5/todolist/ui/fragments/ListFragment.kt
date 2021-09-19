@@ -13,7 +13,6 @@ import com.scorza5.todolist.R
 import com.scorza5.todolist.databinding.FragmentListBinding
 import com.scorza5.todolist.ui.TaskListAdapter
 import com.scorza5.todolist.viewmodel.TaskViewModel
-import com.scorza5.todolist.databinding.EmptyStateBinding
 
 class ListFragment : Fragment(){
 
@@ -61,6 +60,7 @@ class ListFragment : Fragment(){
             }
             adapter.submitList(task)
             adapter.listenerUpdate = {
+                it.active = !it.active
                 mTaskViewModel.updateTask(it)
             }
         })
