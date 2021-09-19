@@ -3,8 +3,10 @@ package com.scorza5.todolist.ui
 import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.PopupMenu
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
@@ -22,7 +24,9 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
     private var taskList = emptyList<Task>()
     var listenerEdit: (Task) -> Unit = {}
     var listenerDelete: (Task) -> Unit = {}
-    var listenerCheckBox: (Task) -> Unit = {}
+    lateinit var onChecked: CompoundButton.OnCheckedChangeListener
+    lateinit var listenerCheckBox: (Task, CompoundButton.OnCheckedChangeListener) -> Unit
+    var listenerUpdate: (Task) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -33,18 +37,16 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         //holder.bind(getItem(position))
         val currentItem = currentList[position]
+        val checkBox = holder.binding.checkBox
         holder.binding.tvTitle.text = currentItem.title
         holder.binding.tvDesc.text = currentItem.description
         holder.binding.tvHour.text = "${currentItem.date} ${currentItem.hour}"
         holder.binding.ivIcon.setOnClickListener{
             holder.showPopup(currentItem)
         }
-
         holder.binding.checkBox.setOnClickListener {
-            currentItem.active = holder.binding.checkBox.isChecked
-            Log.v("active = ", "currentItem.active")
+            holder.check(currentItem, checkBox)
         }
-        listenerCheckBox(currentItem)
 
         isActive(currentItem.active, holder)
 
@@ -82,8 +84,12 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
             }
             popupMenu.show()
         }
+        fun check(item: Task, checkBox: CheckBox){
+            item.active = checkBox.isChecked
+            listenerUpdate(item)
+            }
+        }
     }
-}
 
 class DiffCallback: DiffUtil.ItemCallback<Task>(){
     override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean = oldItem == newItem

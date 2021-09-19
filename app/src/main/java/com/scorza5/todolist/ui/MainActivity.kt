@@ -15,21 +15,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    /*
-    val resultContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-    { result:ActivityResult ->
-        val requestCode = result.data?.extras?.getInt(REQUEST_CODE)
-        Log.e("Request Code:", requestCode.toString())
-        if(requestCode == null){
-            Log.e("Result Contract", "Não recebeu nada")
-        }
-        if(requestCode == CREATE_NEW_TASK){
-            Log.e("Result Contract", "Dessa vez recebeu")
-            //binding.rvTasks.adapter = adapter
-            updateList()
-        }
-    } */
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -47,10 +32,5 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         val navController = navHostFragment.findNavController()
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    fun onCheck(view: View){
-        val fragment = ListFragment()
-        fragment.onChecked(view)
     }
 }

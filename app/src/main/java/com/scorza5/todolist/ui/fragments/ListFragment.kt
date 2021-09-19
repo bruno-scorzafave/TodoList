@@ -6,14 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.scorza5.todolist.R
 import com.scorza5.todolist.databinding.FragmentListBinding
 import com.scorza5.todolist.ui.TaskListAdapter
 import com.scorza5.todolist.viewmodel.TaskViewModel
+import com.scorza5.todolist.databinding.EmptyStateBinding
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(){
 
     private lateinit var binding: FragmentListBinding
     private lateinit var mTaskViewModel: TaskViewModel
@@ -42,7 +44,6 @@ class ListFragment : Fragment() {
             mTaskViewModel.deleteTask(it)
         }
 
-
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
@@ -59,11 +60,14 @@ class ListFragment : Fragment() {
                 emptyState(true)
             }
             adapter.submitList(task)
+            adapter.listenerUpdate = {
+                mTaskViewModel.updateTask(it)
+            }
         })
 
     }
 
-    fun onChecked(view: View){
+    /*fun onChecked(view: View){
         if (view is CheckBox) {
             val checked: Boolean = view.isChecked
             binding.rvTasks.adapter
@@ -81,7 +85,7 @@ class ListFragment : Fragment() {
                 }
             }
         }
-    }
+    }*/
 
     private fun emptyState(visibility: Boolean){
         binding.includeEmpty.root.visibility = if (visibility) View.VISIBLE else View.GONE
