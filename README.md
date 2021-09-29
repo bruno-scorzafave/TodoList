@@ -11,7 +11,7 @@ Using in this project<br>
 
 Implementations of this project are being made in this branch<br>
 Preview of some changes that will do<br>
--Better UI
--Some bugs fixed
--Clean Architecture
--Unit Testing
+-Better UI<br>
+-Some bugs fixed<br>
+-Clean Architecture<br>
+-Unit Testing<br>
