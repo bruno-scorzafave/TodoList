@@ -1,7 +1,6 @@
 package com.scorza5.todolist.ui.fragments
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,10 +14,9 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.scorza5.todolist.R
 import com.scorza5.todolist.databinding.FragmentAddBinding
-import com.scorza5.todolist.extensions.format
-import com.scorza5.todolist.model.Task
-import com.scorza5.todolist.viewmodel.TaskViewModel
-import java.lang.Math.random
+import com.scorza5.todolist.core.extensions.format
+import com.scorza5.todolist.data.model.Task
+import com.scorza5.todolist.presentation.TaskViewModel
 import java.util.*
 
 class AddFragment : Fragment() {

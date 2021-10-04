@@ -1,6 +1,6 @@
-package com.scorza5.todolist.datasource
+package com.scorza5.todolist.data
 
-import com.scorza5.todolist.model.Task
+import com.scorza5.todolist.data.model.Task
 
 object TaskDataSource {
     private val list = arrayListOf<Task>()

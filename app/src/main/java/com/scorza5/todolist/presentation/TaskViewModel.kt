@@ -1,15 +1,14 @@
-package com.scorza5.todolist.viewmodel
+package com.scorza5.todolist.presentation
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.scorza5.todolist.datasource.TaskDao
-import com.scorza5.todolist.datasource.TaskDatabase
-import com.scorza5.todolist.model.Task
-import com.scorza5.todolist.repository.TaskRepository
+import com.scorza5.todolist.data.database.dao.TaskDao
+import com.scorza5.todolist.data.database.TaskDatabase
+import com.scorza5.todolist.data.model.Task
+import com.scorza5.todolist.data.repository.TaskRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -19,7 +18,7 @@ class TaskViewModel(application: Application): AndroidViewModel(application) {
     private val taskRepository: TaskRepository
 
     init {
-        val taskDao:TaskDao = TaskDatabase.getDatabase(application).taskDao()
+        val taskDao: TaskDao = TaskDatabase.getDatabase(application).taskDao()
         taskRepository = TaskRepository(taskDao)
         readAllData = taskRepository.readAllData
         Log.e("Task View Read Data:", readAllData.value.toString())

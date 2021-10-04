@@ -1,9 +1,8 @@
-package com.scorza5.todolist.repository
+package com.scorza5.todolist.data.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.scorza5.todolist.datasource.TaskDao
-import com.scorza5.todolist.model.Task
+import com.scorza5.todolist.data.database.dao.TaskDao
+import com.scorza5.todolist.data.model.Task
 
 class TaskRepository(private val taskDao: TaskDao) {
     val readAllData: LiveData<List<Task>> = taskDao.readAllData()

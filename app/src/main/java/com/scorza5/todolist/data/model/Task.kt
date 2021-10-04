@@ -1,4 +1,4 @@
-package com.scorza5.todolist.model
+package com.scorza5.todolist.data.model
 
 import android.os.Parcelable
 import androidx.room.Entity

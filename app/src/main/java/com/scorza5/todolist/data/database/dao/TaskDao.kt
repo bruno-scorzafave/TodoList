@@ -1,9 +1,8 @@
-package com.scorza5.todolist.datasource
+package com.scorza5.todolist.data.database.dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
-import com.scorza5.todolist.model.Task
+import com.scorza5.todolist.data.model.Task
 
 @Dao
 interface TaskDao {

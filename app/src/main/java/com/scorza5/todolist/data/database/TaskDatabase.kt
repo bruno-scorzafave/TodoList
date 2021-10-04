@@ -1,10 +1,11 @@
-package com.scorza5.todolist.datasource
+package com.scorza5.todolist.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.scorza5.todolist.model.Task
+import com.scorza5.todolist.data.database.dao.TaskDao
+import com.scorza5.todolist.data.model.Task
 
 @Database(entities = [Task::class], version = 2, exportSchema = false)
 abstract class TaskDatabase: RoomDatabase() {
@@ -14,7 +15,7 @@ abstract class TaskDatabase: RoomDatabase() {
         @Volatile
         private var INSTANCE: TaskDatabase? = null
 
-        fun getDatabase(context: Context): TaskDatabase{
+        fun getDatabase(context: Context): TaskDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null){
                 return tempInstance

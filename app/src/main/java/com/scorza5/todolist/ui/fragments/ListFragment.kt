@@ -5,14 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.CompoundButton
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.scorza5.todolist.R
 import com.scorza5.todolist.databinding.FragmentListBinding
 import com.scorza5.todolist.ui.TaskListAdapter
-import com.scorza5.todolist.viewmodel.TaskViewModel
+import com.scorza5.todolist.presentation.TaskViewModel
 
 class ListFragment : Fragment(){
 

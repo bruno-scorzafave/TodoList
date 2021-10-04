@@ -14,9 +14,9 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.scorza5.todolist.R
 import com.scorza5.todolist.databinding.FragmentUpdateBinding
-import com.scorza5.todolist.extensions.format
-import com.scorza5.todolist.model.Task
-import com.scorza5.todolist.viewmodel.TaskViewModel
+import com.scorza5.todolist.core.extensions.format
+import com.scorza5.todolist.data.model.Task
+import com.scorza5.todolist.presentation.TaskViewModel
 import java.util.*
 
 class UpdateFragment : Fragment() {

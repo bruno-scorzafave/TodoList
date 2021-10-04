@@ -69,7 +69,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         app:startIconDrawable="@drawable/ic_calendar"
-        android:hint="@string/task_date">
+        android:hint="@string/task_date"
+        android:focusableInTouchMode="false">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,7 +87,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginStart="8dp"
         app:startIconDrawable="@drawable/ic_watch"
-        android:hint="@string/task_hour">
+        android:hint="@string/task_hour"
+        android:focusableInTouchMode="false">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

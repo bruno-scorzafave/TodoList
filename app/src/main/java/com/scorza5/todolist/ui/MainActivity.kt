@@ -2,14 +2,12 @@ package com.scorza5.todolist.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.scorza5.todolist.R
 import com.scorza5.todolist.databinding.ActivityMainBinding
-import com.scorza5.todolist.ui.fragments.ListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment

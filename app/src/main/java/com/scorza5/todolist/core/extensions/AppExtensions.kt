@@ -1,4 +1,4 @@
-package com.scorza5.todolist.extensions
+package com.scorza5.todolist.core.extensions
 
 import java.text.SimpleDateFormat
 import java.util.*

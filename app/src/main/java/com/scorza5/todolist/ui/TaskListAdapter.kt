@@ -1,22 +1,16 @@
 package com.scorza5.todolist.ui
 
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.PopupMenu
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.scorza5.todolist.R
 import com.scorza5.todolist.databinding.ItemTaskBinding
-import com.scorza5.todolist.model.Task
-import com.scorza5.todolist.repository.TaskRepository
+import com.scorza5.todolist.data.model.Task
 import java.util.*
 
 class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCallback()) {
@@ -56,6 +50,7 @@ class TaskListAdapter: ListAdapter<Task, TaskListAdapter.TaskViewHolder>(DiffCal
     }
     private fun isActive(active: Boolean, holder: TaskViewHolder){
         if (active){
+            //maybe redundant
             holder.binding.checkBox.isChecked = false
             holder.binding.tvTitle.paintFlags = holder.binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
             holder.binding.tvHour.paintFlags = holder.binding.tvTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
